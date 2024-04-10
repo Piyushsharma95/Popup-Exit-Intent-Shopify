@@ -1,0 +1,82 @@
+<style>
+    /* CSS for Popup */
+    #exitPopup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+    }
+
+    #exitPopup p {
+        margin-bottom: 20px;
+    }
+
+    #exitPopup button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+</style>
+
+<!-- HTML for the Popup Content -->
+<div id="exitPopup">
+    <p>This is your popup content.</p>
+    <button id="closePopup">Close</button>
+</div>
+
+<!-- JavaScript for Exit Intent and Delayed Popup -->
+<script>
+    // Exit intent popup for desktop
+    window.addEventListener('mouseout', function(event) {
+        if (!event.toElement && !event.relatedTarget) {
+            showExitPopup();
+            // Track exit intent event
+            gtag('event', 'exit_intent', {
+                'event_category': 'Popup'
+            });
+        }
+    });
+
+    // Delayed popup for mobile
+    setTimeout(function() {
+        showDelayedPopup();
+        // Track delayed popup event
+        gtag('event', 'delayed_popup', {
+            'event_category': 'Popup'
+        });
+    }, 30000); // 30 seconds
+
+    function showExitPopup() {
+        // Show exit intent popup
+        document.getElementById('exitPopup').style.display = 'block';
+    }
+
+    function showDelayedPopup() {
+        // Show delayed popup
+        document.getElementById('exitPopup').style.display = 'block';
+    }
+
+    // Close button functionality
+    document.getElementById('closePopup').addEventListener('click', function() {
+        document.getElementById('exitPopup').style.display = 'none';
+        // Track popup close event
+        gtag('event', 'popup_close', {
+            'event_category': 'Popup'
+        });
+    });
+</script>
